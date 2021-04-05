@@ -1,0 +1,47 @@
+<script>
+import { defineComponent, ref } from "vue";
+import axios from "axios";
+import router from "@/router";
+import store from "@/store";
+
+export default defineComponent({
+  name: "Login",
+
+  setup() {
+    const email = ref("");
+    const password = ref("");
+    const submit = () => {
+      if (email.value === "" || password.value === "") {
+        return false;
+      }
+
+      axios
+        .post(`${process.env.VUE_APP_API_HOST}/login`, {
+          email: email.value,
+          password: password.value,
+        })
+        .then(function (response) {
+          if (response.data.token) {
+            store.commit("user_login_confirmed");
+            window.localStorage.setItem("token", response.data.token);
+            router.push("/");
+          } else {
+            console.log("Nop");
+            console.log(response);
+          }
+        });
+      reset();
+    };
+    const reset = () => {
+      email.value = password.value = "";
+    };
+
+    return {
+      email,
+      password,
+      submit,
+    };
+  },
+});
+</script>
+

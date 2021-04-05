@@ -1,15 +1,20 @@
-const express = require('express');
-const cors = require('cors');
-const bodyParser = require('body-parser');
-const bcrypt = require('bcryptjs');
-const crypto = require('crypto');
-require('dotenv').config();
+const express = require('express')
+const cors = require('cors')
+const bodyParser = require('body-parser')
+const bcrypt = require('bcryptjs')
+const crypto = require('crypto')
+const path = require('path')
+require('dotenv').config()
 
 const app = express();
 
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 app.use(cors());
+
+app.set('view engine', 'ejs')
+app.set('views', path.join(__dirname, 'src/views'));
+app.use(express.static('public'))
 
 app.use(function(req, res, next) {
   console.log(`[${Date.now()}] ${req.method} ${req.originalUrl}`)
@@ -23,6 +28,10 @@ const Player = require('./src/entities/player')
 
 const go = new GameObject()
 const player1 = new Player(go) // While we have no storage
+
+app.get('/', async (req, res) => {
+  res.render('layout', { partial: 'login' })
+})
 
 app.post('/join/toalha', async (req, res) => {
   let id = req.body.player_id
