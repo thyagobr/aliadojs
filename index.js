@@ -23,70 +23,22 @@ app.use(function(req, res, next) {
   next()
 })
 
-const GameObject = require('./src/entities/game_object')
-const Player = require('./src/entities/player')
-
-const go = new GameObject()
-const player1 = new Player(go) // While we have no storage
-
 app.get('/', async (req, res) => {
   res.render('layout', { partial: 'login' })
 })
 
-app.post('/join/toalha', async (req, res) => {
-  let id = req.body.player_id
-  let player = go.players.find((player) => player.id == id)
-  if (player) {
-    console.log(`Player id ${id} has joined`)
-    res.status(200)
-  } else {
-    res.sendStatus(401)
-    console.log(`Player id ${id} does not exist`)
+app.post('/login', async (req, res) => {
+  let nickname = req.body.nickname
+  let password = req.body.password
+  if ((nickname.toLowerCase() === "thyago") && (password == "passwortchen")) {
+    res.redirect('/game')
   }
 })
 
-app.get('/roll_die', async (req, res) => {
-  roll_dice()
-  res.send(go);
-}) 
+app.get('/game', async (req, res) => {
+  res.render('layout', { partial: 'game' })
+})
 
 app.listen(process.env.PORT || 3001, () => {
   console.log("Okay, let's go");
 });
-
-const roll_dice = () => {
-  go.dice_1 = Math.trunc(Math.random() * 6) + 1
-  go.dice_2 = Math.trunc(Math.random() * 6) + 1
-  go.dice_1_used = false
-  go.dice_2_used = false
-}
-
-//const further_dice_rolling = () => {
-//  console.log(`${go.dice_1}, ${go.dice_2}`)
-//
-//  // Only spend the 6 if there are pieces at home
-//  let all_pieces_at_home = go.current_player.pieces.every((piece) => piece.at_home)
-//  if (all_pieces_at_home && !this.dice_combo_leaves_the_house()) {
-//    console.log("next_turn")
-//    go.game_state = "next_turn"
-//  }
-//  if ((go.dice_1 == 6) && (go.current_player.pieces.some((piece) => piece.at_home))) {
-//    go.dice_1_used = true
-//    go.current_player.spawn_piece()
-//    console.log(`${go.dice_1} used`)
-//  }
-//
-//  //                                                             // Only spend the 6 if there are pieces at home
-//  if ((go.dice_2 == 6) && (go.current_player.pieces.some((piece) => piece.at_home))) {
-//    go.dice_2_used = true
-//    go.current_player.spawn_piece()
-//    console.log(`${go.dice_2} used`)
-//  }
-//
-//  // Can the plaeyer do anything?
-//  let movable_pieces = this.go.current_player.pieces.filter((piece) => piece.current_node != null)
-//  if (movable_pieces.length > 0) {
-//    go.game_state = "awaiting_player_movement"
-//  }
-//}
-

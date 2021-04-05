@@ -19,6 +19,7 @@ input[type="password"] {
   font-family: "Helvetica", "Font Awesome 5 Free", sans-serif;
   padding: 10px;
   width: 100%;
+  max-width: 400px;
   border-radius: 5px;
   border: 1px solid #999;
   margin: 20px auto;

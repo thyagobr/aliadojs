@@ -3,11 +3,12 @@
     <h1>Nubaria</h1>
     <p class="login-title">Log-in</p>
   </div>
-  <form action="/login">
+  <form action="/login" method="post">
   <div>
     <div class="input">
       <input
         id="nickname"
+        name="nickname"
         type="text"
         placeholder="nickname"
         autofocus
@@ -18,6 +19,7 @@
     <div class="input">
       <input
         id="password"
+        name="password"
         type="password"
         placeholder="password"
         />
