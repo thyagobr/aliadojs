@@ -1,9 +1,9 @@
 <div class="container">
   <div>
     <h1>Nubaria</h1>
-    <p class="login-title">Log-in</p>
+    <p class="login-title">New user</p>
   </div>
-  <form action="/login" method="post">
+  <form action="/create_user" method="post">
   <div>
     <div class="input">
       <input
@@ -26,15 +26,31 @@
     </div>
   </div>
   <div>
+    <div class="input">
+      <input
+        id="password_confirmation"
+        name="password_confirmation"
+        type="password"
+        placeholder="repeate password"
+        />
+    </div>
+  </div>
+  <div>
     <button
       class="btn btn-purple"
       type="submit"
       >
-      Ok
+      Create
     </button>
   </div>
   </form>
   <div>
-    <a href="/create_user">Create new player</a>
+    <a href="/">Nah, take me back to login</a>
   </div>
 </div>
+
+<style>
+a {
+  margin-top: 30px;
+}
+</style>
