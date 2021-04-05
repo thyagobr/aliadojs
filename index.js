@@ -1,4 +1,3 @@
-const express = require('express')
 const cookie_parser = require('cookie-parser')
 const cors = require('cors')
 const bodyParser = require('body-parser')
@@ -7,8 +6,13 @@ const crypto = require('crypto')
 const path = require('path')
 require('dotenv').config()
 const Pool = require('pg').Pool
-
-const app = express();
+const express = require('express')
+const app = express()
+const http = require('http').Server(app)
+const io = require('socket.io')(http)
+http.listen(process.env.PORT || 3001, () => {
+  console.log("Okay, let's go");
+});
 
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
@@ -103,9 +107,11 @@ app.get('/game', async (req, res) => {
   res.render('layout', { partial: 'game' })
 })
 
-app.listen(process.env.PORT || 3001, () => {
-  console.log("Okay, let's go");
-});
+io.on('connection', (socket) => {
+  console.log("socket connected")
+  socket.join('lobby')
+  socket.to('lobby').emit('player_connected')
+})
 
 // Auth
 const authenticate_token = async function(req, res, next) {

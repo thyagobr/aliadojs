@@ -1,4 +1,10 @@
+<script src="/socket.io/socket.io.js"></script>
 <canvas id="screen" width="1000" height="1200"></canvas>
 <script>
   window.Aliado.start_game()
+  var socket = io('http://localhost:3001')
+  socket.on('player_connected', (data) => {
+    console.log("player connected")
+    console.log(data)
+      })
 </script>
