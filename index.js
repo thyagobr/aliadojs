@@ -1,12 +1,15 @@
-const express = require('express')
-const cors = require('cors')
-const bodyParser = require('body-parser')
-const bcrypt = require('bcryptjs')
-const crypto = require('crypto')
-const path = require('path')
-require('dotenv').config()
+import express from "express"
+import cors from 'cors'
+import bodyParser from 'body-parser'
+import bcrypt from 'bcryptjs'
+import crypto from 'crypto'
+import path from 'path'
+import dotenv from 'dotenv'
+dotenv.config()
 
 const app = express();
+const module_url = new URL(import.meta.url)
+const __dirname = path.dirname(module_url.pathname)
 
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies

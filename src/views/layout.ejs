@@ -7,6 +7,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <title>Nubaria</title>
   <link rel="stylesheet" type="text/css" href="app.css" />
+  <script src="main.js"></script>
   <style type="text/css">
 * {
   margin: 0;
@@ -23,5 +24,12 @@
     <%- include(partial) %>
   </div>
 </body>
+
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      console.log("DOM loaded")
+      //window.Aliado.start_game()
+    })
+  </script>
 
 </html>
