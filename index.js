@@ -1,18 +1,28 @@
-const cookie_parser = require('cookie-parser')
-const cors = require('cors')
-const bodyParser = require('body-parser')
-const bcrypt = require('bcryptjs')
-const crypto = require('crypto')
-const path = require('path')
-require('dotenv').config()
-const Pool = require('pg').Pool
-const express = require('express')
+import cookie_parser from 'cookie-parser'
+import cors from 'cors'
+import bodyParser from 'body-parser'
+import bcrypt from 'bcryptjs'
+import crypto from 'crypto'
+import path from 'path'
+import dotenv from 'dotenv'
+dotenv.config()
+import pg from 'pg'
+const Pool = pg.Pool
+import express from 'express'
 const app = express()
-const http = require('http').Server(app)
-const io = require('socket.io')(http)
-http.listen(process.env.PORT || 3001, () => {
+import http from 'http'
+const server = http.Server(app)
+import { Server } from 'socket.io'
+const io = new Server(server)
+server.listen(process.env.PORT || 3001, () => {
   console.log("Okay, let's go");
 });
+
+
+// __dirname workaround for modules
+const module_url = new URL(import.meta.url)
+const __dirname = path.dirname(module_url.pathname)
+// END - __dirname workaaround for modules
 
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
